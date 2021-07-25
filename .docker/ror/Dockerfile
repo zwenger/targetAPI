@@ -15,6 +15,7 @@ RUN gem install bundler
 RUN bundle install
 RUN rails generate rspec:install
 RUN bundle exec rails g annotate:install
+RUN bundle exec rails generate devise:install
 
 
 # Configure endpoint.
