@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module Ror
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.api_only = true
     config.load_defaults 6.1
 
     # Configuration for the application, engines, and railties goes here.
@@ -18,5 +19,15 @@ module Ror
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          headers: :any,
+          expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+          methods: [:get, :post, :options, :delete, :put]
+      end
+    end
   end
 end
