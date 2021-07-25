@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby:3.0.2
 
 # Register Yarn package source.
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -13,6 +13,9 @@ WORKDIR /ror
 COPY ./ror /ror
 RUN gem install bundler
 RUN bundle install
+RUN rails generate rspec:install
+RUN bundle exec rails g annotate:install
+
 
 # Configure endpoint.
 COPY ./.docker/ror/entrypoint.sh /usr/bin/
